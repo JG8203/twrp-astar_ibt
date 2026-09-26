@@ -46,3 +46,28 @@ the copied userspace under `lineage/vendor/softwinner/astar_ibt/proprietary`.
 
 The complete stock dump in the repository is the restore source. No partition
 image is modified by the bring-up tooling.
+
+## GitHub Actions build
+
+The manually dispatched **Build LineageOS 13 (astar_ibt)** workflow builds the
+upstream `cm-13.0` branch on an x86-64 Linux runner using the Java 8/Python 2
+container. The lunch target is `cm_astar_ibt-eng`. It produces boot, system,
+and recovery images; these are experimental and have not been boot-tested.
+
+Create the reduced vendor archive locally with:
+
+```sh
+python3 lineage/vendor_archive.py pack out/lineage-vendor.tar.gz
+```
+
+Supply its HTTPS download URL as the workflow's `vendor_url` input (or as the
+repository secret `LINEAGE_VENDOR_URL`). The archive installer accepts exactly
+the files pinned in `BLOBS.sha256`, verifies all hashes before extraction, and
+rejects extra entries. Archive URLs are passed as environment variables rather
+than interpolated into shell commands.
+
+The workflow checks for at least 80 GiB of free disk before syncing and uses two
+compile jobs. This is a starting resource budget, not a guarantee that the full
+build will fit. It uploads the build log even if compilation fails; successful
+runs also upload images and checksums. A successful compile still requires
+boot-layout inspection and hardware testing before the port is usable.

@@ -25,6 +25,8 @@ if [ ! -f "$ROOT/vendor/softwinner/astar_ibt/proprietary/vendor/modules/mali.ko"
     exit 1
 fi
 
+python3 "$ROOT/verify_vendor.py"
+
 mkdir -p "$BUILD_DIR"
 cd "$BUILD_DIR"
 

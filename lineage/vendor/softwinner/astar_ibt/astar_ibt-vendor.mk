@@ -150,3 +150,17 @@ PRODUCT_COPY_FILES += \
     $(ASTAR_VENDOR_PATH)/vendor/modules/vfe_v4l2.ko:system/vendor/modules/vfe_v4l2.ko \
     $(ASTAR_VENDOR_PATH)/vendor/modules/videobuf-core.ko:system/vendor/modules/videobuf-core.ko \
     $(ASTAR_VENDOR_PATH)/vendor/modules/videobuf-dma-contig.ko:system/vendor/modules/videobuf-dma-contig.ko
+
+# Direct hardware HAL dependencies verified with llvm-readelf -d.
+PRODUCT_COPY_FILES += \
+    $(ASTAR_VENDOR_PATH)/lib/libcodec_audio.so:system/lib/libcodec_audio.so \
+    $(ASTAR_VENDOR_PATH)/lib/libril_audio.so:system/lib/libril_audio.so \
+    $(ASTAR_VENDOR_PATH)/lib/libhdr.so:system/lib/libhdr.so \
+    $(ASTAR_VENDOR_PATH)/lib/libproc.so:system/lib/libproc.so \
+    $(ASTAR_VENDOR_PATH)/lib/libMemAdapter.so:system/lib/libMemAdapter.so \
+    $(ASTAR_VENDOR_PATH)/lib/libvencoder.so:system/lib/libvencoder.so \
+    $(ASTAR_VENDOR_PATH)/lib/libfacedetection.so:system/lib/libfacedetection.so \
+    $(ASTAR_VENDOR_PATH)/lib/libSmileEyeBlink.so:system/lib/libSmileEyeBlink.so \
+    $(ASTAR_VENDOR_PATH)/lib/libapperceivepeople.so:system/lib/libapperceivepeople.so \
+    $(ASTAR_VENDOR_PATH)/lib/libVE.so:system/lib/libVE.so \
+    $(ASTAR_VENDOR_PATH)/lib/libvdecoder.so:system/lib/libvdecoder.so
