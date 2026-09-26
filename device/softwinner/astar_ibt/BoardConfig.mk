@@ -86,4 +86,3 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 # to insmod the display/touch/nand modules.
 # ---------------------------------------------------------------------------
 BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
-BOARD_SEPOLICY_UNION += module.te
