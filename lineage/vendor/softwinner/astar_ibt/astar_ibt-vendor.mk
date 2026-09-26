@@ -31,7 +31,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/etc/wifi/wifi_efuse_8723cs.map:system/etc/wifi/wifi_efuse_8723cs.map
 
-$(foreach fw,$(notdir $(wildcard $(LOCAL_PATH)/etc/firmware/rtl8723cs_*)),\
-  $(eval PRODUCT_COPY_FILES += $(LOCAL_PATH)/etc/firmware/$(fw):system/etc/firmware/$(fw)))
-
-PRODUCT_PACKAGES += astar_ibt_vendor
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_cg_config:system/etc/firmware/rtl8723cs_cg_config \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_cg_fw:system/etc/firmware/rtl8723cs_cg_fw \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_vf_config:system/etc/firmware/rtl8723cs_vf_config \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_vf_fw:system/etc/firmware/rtl8723cs_vf_fw \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_xx_config:system/etc/firmware/rtl8723cs_xx_config \
+    $(LOCAL_PATH)/etc/firmware/rtl8723cs_xx_fw:system/etc/firmware/rtl8723cs_xx_fw
