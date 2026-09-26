@@ -1,6 +1,7 @@
 LOCAL_PATH := device/softwinner/astar_ibt
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product-if-exists, vendor/softwinner/astar_ibt/astar_ibt-vendor.mk)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.sun8i:root/fstab.sun8i \

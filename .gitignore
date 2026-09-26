@@ -5,7 +5,7 @@ out/
 build/
 work/
 lineage/build/
-lineage/vendor/
+lineage/vendor/softwinner/astar_ibt/proprietary/
 
 # Never commit the stock dump (several GB) or any other image files.
 RQ713_INET_U70X_20260926_184544/

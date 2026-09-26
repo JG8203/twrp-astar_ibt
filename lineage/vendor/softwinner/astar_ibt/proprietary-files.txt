@@ -1,0 +1,29 @@
+# Paths are relative to the extracted Android 6.0 system partition.
+# This is the deliberately reduced hardware blob set used by astar_ibt-vendor.mk.
+bin/rild
+bin/radiooptions
+bin/setbtmacaddr
+bin/setmacaddr
+bin/wpa_supplicant
+bin/wpa_cli
+lib/egl/libGLES_mali.so
+lib/hw/audio.primary.astar.so
+lib/hw/camera.astar.so
+lib/hw/gralloc.default.so
+lib/hw/hwcomposer.astar.so
+lib/hw/lights.astar.so
+lib/hw/power.default.so
+lib/hw/sensors.exdroid.so
+lib/libsoftwinner-ril-6.0.so
+lib/libOmxCore.so
+lib/libOmxVdec.so
+lib/libOmxVenc.so
+lib/libstagefright_yuv.so
+lib/libsunxi_crypto.so
+etc/camera.cfg
+etc/media_profiles.xml
+etc/audio_policy.conf
+etc/audio_effects.conf
+etc/wifi/wpa_supplicant.conf
+etc/wifi/wpa_supplicant_overlay.conf
+etc/wifi/wifi_efuse_8723cs.map
