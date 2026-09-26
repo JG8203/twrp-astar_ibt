@@ -4,7 +4,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.sun8i:root/fstab.sun8i \
-    $(LOCAL_PATH)/rootdir/init.recovery.sun8i.rc:root/init.recovery.sun8i.rc
+    $(LOCAL_PATH)/rootdir/init.recovery.sun8i.rc:root/init.recovery.sun8i.rc \
+    $(LOCAL_PATH)/rootdir/ueventd.sun8i.rc:root/ueventd.sun8i.rc \
+    $(LOCAL_PATH)/rootdir/disp.ko:root/disp.ko \
+    $(LOCAL_PATH)/rootdir/lcd.ko:root/lcd.ko \
+    $(LOCAL_PATH)/rootdir/nand.ko:root/nand.ko \
+    $(LOCAL_PATH)/rootdir/gslX680new.ko:root/gslX680new.ko \
+    $(LOCAL_PATH)/rootdir/sw-device.ko:root/sw-device.ko \
+    $(LOCAL_PATH)/rootdir/sunxi-keyboard.ko:root/sunxi-keyboard.ko
+
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware=sun8i \
