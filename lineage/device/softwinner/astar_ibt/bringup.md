@@ -5,16 +5,15 @@
 LineageOS 13 (`android-6.0`) with the stock 3.4.39 kernel. The first image is
 an eng/userdebug build without GApps.
 
-## Required before the first build
+## Current evidence
 
-- Copy the TWRP `BoardConfig.mk` into this tree and replace recovery-only
-  variables with the Lineage boot-image settings.
-- Add the stock kernel and a complete `Android.mk`/`AndroidProducts.mk` device
-  registration.
-- Extract `/system` proprietary files from `nandd.img` and generate a checked-in
-  `proprietary-files.txt` with SHA-256 hashes.
-- Add rootdir files from `work/stock-boot-ramdisk`, then adapt paths and SELinux
-  labels to LineageOS 13.
+- Stock kernel/modules and 155 vendor inputs are present and hash-pinned.
+- Native read-only extraction from the NAND system backup has been tested.
+- GitHub Actions completed the initial CM13 source sync.
+- The first run failed at product discovery. The tree now uses `lineage.mk`,
+  matching CM13's device discovery rule, with an explicit product alias.
+- Compilation, image validation, SELinux adaptation, and hardware testing are
+  still outstanding. No bootable Lineage image has been demonstrated.
 
 ## Hardware gates
 

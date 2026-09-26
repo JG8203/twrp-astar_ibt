@@ -1,2 +1,2 @@
-LOCAL_DIR := $(call my-dir)
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/lineage_astar_ibt.mk
+# LOCAL_DIR is supplied by build/core/product.mk during enumeration.
+PRODUCT_MAKEFILES := cm_astar_ibt:$(LOCAL_DIR)/lineage.mk

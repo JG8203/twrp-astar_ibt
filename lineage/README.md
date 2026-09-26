@@ -31,18 +31,21 @@ memory device.
 4. Build a bootable eng image and test display, touch, NAND mounts, USB/ADB,
    and recovery reboot on the tablet.
 5. Add Wi-Fi, audio, camera, Bluetooth, suspend, and low-memory tuning one
-   subsystem at a time, recording failures in `lineage/bringup.md`.
+   subsystem at a time, recording failures in `device/softwinner/astar_ibt/bringup.md`.
 
-On macOS with Podman, the stock system image can be extracted without writing
-to it:
+Extract the stock system read-only using native `debugfs` (on macOS, install
+with `brew install e2fsprogs`) or an available container engine:
 
 ```sh
-CONTAINER_ENGINE=podman ./lineage/extract-stock-image.sh \
+./lineage/extract-stock-image.sh \
   RQ713_INET_U70X_20260926_184544/partitions/nandd.img
 ```
 
-The helper uses Ubuntu's `debugfs` inside a disposable container and places
-the copied userspace under `lineage/vendor/softwinner/astar_ibt/proprietary`.
+The helper prefers native `debugfs`; set `CONTAINER_ENGINE=podman` or `docker`
+to force container extraction. It installs only the 155 hash-pinned hardware
+inputs under `lineage/vendor/softwinner/astar_ibt/proprietary`. Ownership
+warnings from unprivileged `debugfs` on macOS are expected; the script checks
+extracted contents and hashes before accepting the result.
 
 The complete stock dump in the repository is the restore source. No partition
 image is modified by the bring-up tooling.

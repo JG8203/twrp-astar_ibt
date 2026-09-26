@@ -1,27 +1,40 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-# Extract stock Android files after mounting nandd.img read-only. The script
-# deliberately copies only userspace/vendor inputs; it never writes to the
-# partition image or the NAND backup directory.
-
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SYSTEM_DIR="${1:-}"
-DEST="$ROOT/vendor/softwinner/astar_ibt/proprietary"
-
 if [ -z "$SYSTEM_DIR" ] || [ ! -d "$SYSTEM_DIR" ]; then
-    echo "usage: $0 /path/to/read-only/mounted/system" >&2
+    echo "usage: $0 /path/to/extracted/system" >&2
     exit 2
 fi
-
-mkdir -p "$DEST"
-
-for dir in bin etc framework lib media usr vendor xbin; do
-    if [ -d "$SYSTEM_DIR/$dir" ]; then
-        mkdir -p "$DEST/$dir"
-        cp -a "$SYSTEM_DIR/$dir/." "$DEST/$dir/"
-    fi
-done
-
-printf 'Extracted stock userspace files to %s\n' "$DEST"
-printf 'Review and reduce the copied set before generating proprietary-files.txt.\n'
+python3 - "$ROOT" "$SYSTEM_DIR" <<'PYTHON'
+import hashlib
+import os
+from pathlib import Path
+import shutil
+import sys
+import tempfile
+root = Path(sys.argv[1]) / 'vendor/softwinner/astar_ibt'
+source = Path(sys.argv[2]).resolve()
+hashes = dict(line.split('  ', 1)[::-1] for line in
+              (root / 'BLOBS.sha256').read_text().splitlines())
+# Check every input before replacing any existing blob.
+for name, expected in hashes.items():
+    path = source / name
+    if path.is_symlink() or not path.is_file():
+        raise SystemExit(f'Missing regular stock file: {name}')
+    if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+        raise SystemExit(f'Stock hash mismatch: {name}')
+for name in hashes:
+    destination = root / 'proprietary' / name
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(dir=destination.parent)
+    os.close(fd)
+    try:
+        shutil.copy2(source / name, temporary)
+        os.replace(temporary, destination)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+print(f'Installed {len(hashes)} verified stock vendor files')
+PYTHON
+python3 "$ROOT/verify_vendor.py"
