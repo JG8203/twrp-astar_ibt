@@ -50,10 +50,17 @@ jobs:
       - name: Build the builder container
         run: docker build -t twrp-astar-ibt-builder docker/
 
+      - name: Check build inputs
+        run: |
+          (cd device/softwinner/astar_ibt && sha256sum -c BLOBS.sha256)
+          bash -n build_twrp.sh docker/build.sh
+          python3 -m py_compile tools/bootimg.py tools/verify_recovery.py
+
       - name: Sync sources and build TWRP
         run: |
           docker run --rm \
             -v "$GITHUB_WORKSPACE:/work" \
+            -e JOBS=4 \
             -w /work \
             twrp-astar-ibt-builder \
             ./build_twrp.sh

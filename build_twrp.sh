@@ -72,7 +72,7 @@ if [ "${TARGET_PRODUCT:-}" != "omni_astar_ibt" ]; then
     echo "error: lunch omni_astar_ibt-eng failed (TARGET_PRODUCT='${TARGET_PRODUCT:-}')" >&2
     exit 1
 fi
-mka recoveryimage -j"$JOBS"
+make -j"$JOBS" recoveryimage
 
 BUILT_IMG="out/target/product/astar_ibt/recovery.img"
 FINAL_IMG="$OUT_DIR/twrp-astar_ibt-recovery.img"
