@@ -62,9 +62,16 @@ mkdir -p "$(dirname "$DEVICE_PATH")"
 cp -a "$ROOT/device/softwinner/astar_ibt" "$DEVICE_PATH"
 
 log "Building recovery image (-j$JOBS)"
+# envsetup.sh/lunch predate `set -u` discipline: run them without it.
+set +eu
 # shellcheck disable=SC1091
 source build/envsetup.sh
 lunch "omni_astar_ibt-eng"
+set -eu
+if [ "${TARGET_PRODUCT:-}" != "omni_astar_ibt" ]; then
+    echo "error: lunch omni_astar_ibt-eng failed (TARGET_PRODUCT='${TARGET_PRODUCT:-}')" >&2
+    exit 1
+fi
 mka recoveryimage -j"$JOBS"
 
 BUILT_IMG="out/target/product/astar_ibt/recovery.img"
