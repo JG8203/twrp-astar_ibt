@@ -13,7 +13,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         openjdk-8-jdk git gnupg flex bison gperf build-essential zip curl \
         zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses-dev \
-        xorgproto libx11-dev lib32z1-dev ccache libgl1-mesa-dev \
+        libx11-dev lib32z1-dev ccache libgl1-mesa-dev \
         libxml2-utils xsltproc unzip python2 python3 bc libssl-dev rsync \
         cpio sudo file ca-certificates && \
     ln -sf /usr/bin/python2 /usr/bin/python && \
