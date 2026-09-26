@@ -1,19 +1,16 @@
-# TWRP fstab for the iNet / Allwinner RQ-713 (astar_ibt).
-#
-# The Allwinner NAND driver exposes one block device per partition
-# (/dev/block/nanda ... /dev/block/nandn). by-name symlinks are created by
-# Allwinner's own init, not by the AOSP init/recovery, so use the raw nodes.
-#
-# <mount point>  <fstype>  <device>                  <device2>            <flags>
+# Android fstab file.
+#<src>                                         <mnt_point>  <type>  <mnt_flags and options>  <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-/boot            emmc      /dev/block/nandc                               flags=display="Boot";backup=1
-/recovery        emmc      /dev/block/nandf                               flags=display="Recovery";backup=1
-/system          ext4      /dev/block/nandd                               flags=display="System";backup=1;wipeingui
-/data            ext4      /dev/block/nandn                               flags=display="Data";backup=1;wipeingui;wipeduringfactoryreset
-/cache           ext4      /dev/block/nandg                               flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
-/misc            emmc      /dev/block/nande                               flags=display="Misc";backup=0
-/bootloader      vfat      /dev/block/nanda                               flags=display="Bootloader (logo)";backup=0
-/logger          ext4      /dev/block/nandl                               flags=display="Logger";backup=0
-/private         vfat      /dev/block/nandi                               flags=display="Private";backup=0
-/external_sd     vfat      /dev/block/mmcblk0p1   /dev/block/mmcblk0     flags=display="MicroSD";storage;wipeingui;removable
-/usb_otg         vfat      /dev/block/sda1        /dev/block/sda         flags=display="USB OTG";storage;wipeingui;removable
+/dev/block/nandd               /system      ext4    ro,barrier=1                                                                              wait
+/dev/block/nandg                /cache       ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check,formattable
+/dev/block/nandl                 /logger      ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check,formattable
+/dev/block/nandn                /data        ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check,formattable,encryptable=/dev/block/nandh
+/dev/block/nandj                  /persistent  emmc    defaults                                                                		       defaults
+/devices/platform/sunxi-mmc.0/mmc_host/mmc*     auto         auto         defaults                                                                     voldmanaged=extsd:auto
+/devices/platform/sunxi-mmc.1/mmc_host/mmc*     auto         auto         defaults                                                                     voldmanaged=extsd:auto
+/devices/platform/sunxi-ehci.1                  auto         auto         defaults                                                                     voldmanaged=usb:auto
+/devices/platform/sunxi_hcd_host0/usb*          auto         auto         defaults                                                                     voldmanaged=usb:auto
+/devices/platform/sunxi-ohci.1                  auto         auto         defaults                                                                     voldmanaged=usb:auto
+/dev/block/zram0                        none                swap    defaults                                                                zramsize=268435456

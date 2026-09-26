@@ -16,7 +16,7 @@ fi
 
 mkdir -p "$DEST"
 
-for dir in bin etc framework lib media usr xbin; do
+for dir in bin etc framework lib media usr vendor xbin; do
     if [ -d "$SYSTEM_DIR/$dir" ]; then
         mkdir -p "$DEST/$dir"
         cp -a "$SYSTEM_DIR/$dir/." "$DEST/$dir/"

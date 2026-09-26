@@ -18,15 +18,15 @@ on init
     mkdir /oem 0550 system system
 
 on early-fs
-    insmod nand.ko
+    insmod /nand.ko
 
     mount_all /fstab.sun8i
 
     swapon_all /fstab.sun8i
     restorecon_recursive /persist
 
-    wait /dev/block/by-name/media_data
-    mount vfat /dev/block/by-name/media_data /oem ro nosuid nodev utf8,context=u:object_r:oemfs:s0
+    wait /dev/block/nandm
+    mount vfat /dev/block/nandm /oem ro nosuid nodev utf8,context=u:object_r:oemfs:s0
     insmod /system/vendor/modules/disp.ko
     insmod /system/vendor/modules/lcd.ko
 
@@ -164,7 +164,7 @@ on charger
 
 on fs
     # UDISK would be mounted as data partition when multiple user enabled.
-    #format_userdata /dev/block/by-name/UDISK ASTAR
+    #format_userdata /dev/block/nandn ASTAR
 
 #service sensors /sbin/busybox sh /system/bin/sensors.sh
  #   user root

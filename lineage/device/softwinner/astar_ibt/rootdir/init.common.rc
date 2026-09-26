@@ -14,13 +14,12 @@ on post-fs
     mkdir /logger/lost+found 0770 root root
 
 on post-fs-data
-    wait /dev/block/by-name/bootloader
-    mount vfat /dev/block/by-name/bootloader /bootloader shortname=lower,uid=1000,gid=1000,dmask=007,fmask=007
+    wait /dev/block/nanda
+    mount vfat /dev/block/nanda /bootloader shortname=lower,uid=1000,gid=1000,dmask=007,fmask=007
     start bootclone
     start precopy
-    format_userdata /dev/block/by-name/private PRIVATE
     #mkdir /mnt/private
-    mount vfat /dev/block/by-name/private /private
+    mount vfat /dev/block/nandi /private
 
 on boot
     # last shutdown alarm will cause the suspend alarm invalid, so clean it
