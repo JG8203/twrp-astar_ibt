@@ -67,6 +67,7 @@ jobs:
 
       - name: Inspect the result
         run: |
+          sudo chown -R "$(id -u):$(id -g)" out
           ls -lh out/
           sha256sum out/twrp-astar_ibt-recovery.img | tee out/SHA256SUMS.txt
 
