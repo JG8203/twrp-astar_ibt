@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+out/
+build/
+work/
+
+# Never commit the stock dump (several GB) or any other image files.
+RQ713_INET_U70X_20260926_184544/
+*.img

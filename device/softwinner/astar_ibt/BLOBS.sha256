@@ -1,0 +1,12 @@
+# SHA-256 of the binary blobs in this device tree (all extracted from the stock dump)
+#
+# kernel      <- partitions/nandc.img / nandf.img (identical kernel segment)
+# *.ko        <- nandf.img recovery ramdisk root
+
+6b72d4eec4e5ed87677810954680efc9e12797ef8775a4ba21fd2e7b42c54e86  kernel
+5bb070ad7c31700fbb03e02cd6255370d6765299cf04305d06dbbbfe596027a3  recovery/root/disp.ko
+4e9eafe4c561f3adb9c93b25965f11b08b35746b59f03f2d472a32b7c05e1955  recovery/root/gslX680new.ko
+3476761f8129813adb85caf7ab539a7c1c9a78f3b620362c6a6cbc8b5bddf331  recovery/root/lcd.ko
+e1447a86ec17ef6c3ee66b2fedf11eb48ddc03b6f42e7c90ea7d37dcddeec01d  recovery/root/nand.ko
+04d71c0606615aaf531898f3ba427f68d57fcfc3decb7b40489fe640ace74f28  recovery/root/sunxi-keyboard.ko
+a1ddcbed42661737a483a6dcfca0c8c5b8ad2b8eab16de6b167ac68e4fb32a8c  recovery/root/sw-device.ko

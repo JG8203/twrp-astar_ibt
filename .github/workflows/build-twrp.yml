@@ -1,0 +1,74 @@
+name: Build TWRP (RQ-713 / astar_ibt)
+
+# Builds the TWRP recovery image for the iNet/Allwinner RQ-713 (astar_ibt)
+# on a GitHub-hosted x86_64 runner, inside the Ubuntu 20.04 container from
+# docker/ (old AOSP 6.0 build system needs JDK 8 + Python 2).
+#
+# Output: the `twrp-astar_ibt-recovery` artifact (recovery.img + SHA256SUMS).
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'device/**'
+      - 'docker/**'
+      - 'tools/**'
+      - 'build_twrp.sh'
+      - '.github/workflows/build-twrp.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: twrp-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build recovery.img
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/local/share/boost \
+            /usr/local/share/powershell \
+            /usr/share/swift 2>/dev/null || true
+          df -h /
+
+      - name: Build the builder container
+        run: docker build -t twrp-astar-ibt-builder docker/
+
+      - name: Sync sources and build TWRP
+        run: |
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/work" \
+            -w /work \
+            twrp-astar-ibt-builder \
+            ./build_twrp.sh
+
+      - name: Inspect the result
+        run: |
+          ls -lh out/
+          sha256sum out/twrp-astar_ibt-recovery.img | tee out/SHA256SUMS.txt
+
+      - name: Upload recovery image
+        uses: actions/upload-artifact@v4
+        with:
+          name: twrp-astar_ibt-recovery
+          path: |
+            out/twrp-astar_ibt-recovery.img
+            out/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30

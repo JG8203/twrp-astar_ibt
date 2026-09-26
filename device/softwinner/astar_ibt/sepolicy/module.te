@@ -1,0 +1,3 @@
+# Allow init to load the recovery kernel modules (insmod in
+# init.recovery.sun8i.rc) when SELinux is enforcing.
+allow init self:capability { sys_module };
