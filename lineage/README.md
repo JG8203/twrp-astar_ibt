@@ -33,5 +33,16 @@ memory device.
 5. Add Wi-Fi, audio, camera, Bluetooth, suspend, and low-memory tuning one
    subsystem at a time, recording failures in `lineage/bringup.md`.
 
+On macOS with Podman, the stock system image can be extracted without writing
+to it:
+
+```sh
+CONTAINER_ENGINE=podman ./lineage/extract-stock-image.sh \
+  RQ713_INET_U70X_20260926_184544/partitions/nandd.img
+```
+
+The helper uses Ubuntu's `debugfs` inside a disposable container and places
+the copied userspace under `lineage/vendor/softwinner/astar_ibt/proprietary`.
+
 The complete stock dump in the repository is the restore source. No partition
 image is modified by the bring-up tooling.
